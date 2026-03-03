@@ -4,12 +4,6 @@
 
 using namespace std;
 
-typedef struct dataTag {
-    int operand;
-    string operatorSign;
-    bool isNum;
-} Data;
-
 class InfixData {
     //Private attributes
     private:
@@ -18,24 +12,30 @@ class InfixData {
     //Public methods
     public:
         //Constructor
-        InfixData(string input) {
+        InfixData(string input) 
+        {
             setQueue(input);
         }
 
         //Getter
-        queue<Data> getData() {
+        queue<Data> getData() 
+        {
             return data;
         }
         
         //Setter (parses the input string as a Data queue)
-        void setQueue(string input) {
+        void setQueue(string input) 
+        {
             //Iterate through each characters in the string
             int buffer = -1;
-            for (size_t i = 0; i < input.length(); i ++) {
-                char current = input[i];
+            size_t stringLen = input.length();
+            for (int j = 0; j < int(stringLen); j ++) 
+            {
+                char current = input[j];
 
                 //If the current char is a number, keep pushing to the buffer
-                if (current >= 48 && current <= 57) {
+                if (current >= 48 && current <= 57) 
+                {
                     //Keep pushing it into the buffer
                     if (buffer == -1)
                         buffer = 0;
@@ -43,36 +43,40 @@ class InfixData {
                     buffer += current - 48;
                 } 
                 //If the current char is an operator, push to the queue
-                else {
+                else 
+                {
                     //If the buffer is not empty, push the operand first
-                    if (buffer != -1) {
+                    if (buffer != -1) 
+                    {
                         Data temp1;
-                        temp1.operand = buffer;
-                        temp1.isNum = true;
+                        temp1.setOperand(buffer);
                         data.push(temp1);
                         buffer = -1;
                     } 
 
                     // simply push to buffer
                     Data temp2;
-                    temp2.operatorSign = current;
-                    temp2.isNum = false;
+                    string tempOp = "_";
+                    tempOp[0] = current; //yes, i know this is stupid but you gotta admire the creativity
 
                     //Check for double length operators
-                    if (current == '|' || current == '&' || current == '=' || (current == '!' && input[i + 1] == '=')) {
-                        temp2.operatorSign += input[i+1];
-                        i ++;
+                    if (current == '|' || current == '&' || current == '=' 
+                        || (current == '!' && input[j + 1] == '=')) 
+                    {
+                        tempOp += "_";
+                        tempOp[1] = input[j+1];
+                        j ++;
                     }
-
+                    temp2.setOperator(tempOp);
                     data.push(temp2); 
                 }
             }
 
             //Push last input for operands
-            if (buffer != -1) {
+            if (buffer != -1) 
+            {
                 Data temp1;
-                temp1.operand = buffer;
-                temp1.isNum = true;
+                temp1.setOperand(buffer);
                 data.push(temp1);
                 buffer = -1;
             } 
@@ -81,15 +85,16 @@ class InfixData {
         //This method prints out the contents of the queue
         void displayQueue() {
             int length = data.size();
-            for (int j = 0; j < length; j ++) {
+            for (int j = 0; j < length; j ++) 
+            {
                 Data temp = data.front();
                 data.pop();
                 data.push(temp);
                 
-                if (temp.isNum)
-                    cout << temp.operand << " ";
+                if (temp.isOperand())
+                    cout << temp.getOperand() << " ";
                 else
-                    cout << temp.operatorSign << " ";
+                    cout << temp.getOperator() << " ";
                 cout << "\n";
             }
         }
