@@ -11,18 +11,23 @@ typedef struct dataTag {
 } Data;
 
 class InfixData {
+    //Private attributes
     private:
         queue<Data> data;
     
+    //Public methods
     public:
+        //Constructor
         InfixData(string input) {
             setQueue(input);
         }
 
+        //Getter
         queue<Data> getData() {
             return data;
         }
         
+        //Setter (parses the input string as a Data queue)
         void setQueue(string input) {
             //Iterate through each characters in the string
             int buffer = -1;
@@ -63,6 +68,7 @@ class InfixData {
                 }
             }
 
+            //Push last input for operands
             if (buffer != -1) {
                 Data temp1;
                 temp1.operand = buffer;
@@ -72,6 +78,7 @@ class InfixData {
             } 
         }
 
+        //This method prints out the contents of the queue
         void displayQueue() {
             int length = data.size();
             for (int j = 0; j < length; j ++) {
@@ -80,9 +87,10 @@ class InfixData {
                 data.push(temp);
                 
                 if (temp.isNum)
-                    cout << temp.operand << "\n";
+                    cout << temp.operand << " ";
                 else
-                    cout << temp.operatorSign << "\n";
+                    cout << temp.operatorSign << " ";
+                cout << "\n";
             }
         }
         
