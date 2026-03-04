@@ -61,7 +61,7 @@ class InfixData {
 
                     //Check for double length operators
                     if (current == '|' || current == '&' || current == '=' 
-                        || (current == '!' && input[j + 1] == '=')) 
+                        || ((current == '>' || current == '<' || current == '!') && input[j + 1] == '=')) 
                     {
                         tempOp += "_";
                         tempOp[1] = input[j+1];
@@ -80,24 +80,6 @@ class InfixData {
                 data.push(temp1);
                 buffer = -1;
             } 
-        }
-
-        //This method prints out the contents of the queue
-        void displayQueue() {
-            int length = data.size();
-            for (int j = 0; j < length; j ++) 
-            {
-                Data temp = data.front();
-                data.pop();
-                data.push(temp);
-                
-                if (temp.isOperand())
-                    cout << temp.getOperand() << " ";
-                else
-                    cout << temp.getOperator() << " ";
-                cout << "\n";
-            }
-        }
-        
+        }        
     
 };
