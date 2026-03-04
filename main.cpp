@@ -49,6 +49,7 @@ int main(){
         //Evaluate postfix
         Data result = postfix.evaluate();
 
+        //Display result
         cout << "\nResult: ";
         if (result.isOperand())
             cout << result.getOperand();
