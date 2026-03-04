@@ -29,7 +29,8 @@ int main(){
     
     while (input != "EXIT" && input != "exit") 
     {
-        cout << "\nInput Valid Infix Expression (type EXIT to stop): ";
+        cout << "\n==================================================\n";
+        cout << "Input Valid Infix Expression (type EXIT to stop): ";
         cin >> input;
 
         if (input == "EXIT" || input == "exit")
@@ -37,7 +38,8 @@ int main(){
         
         //Convert string to infix data
         InfixData infix = InfixData(input);
-        cout << "Input: " + input << "\n";
+        cout << "\nInput: ";
+        displayQueue(infix.getData());
 
         //Convert the infix to postfix
         PostfixData postfix = PostfixData(infix.getData());
@@ -49,9 +51,9 @@ int main(){
 
         cout << "\nResult: ";
         if (result.isOperand())
-            cout << result.getOperand() << "\n";
+            cout << result.getOperand();
         else
-            cout << result.getOperator() << "\n";
+            cout << result.getOperator();
     }
 
     return 0;
