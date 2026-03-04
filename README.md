@@ -19,3 +19,7 @@
 - Open the directory
 - Compile the project in the terminal using `gcc main.cpp -o main.exe`
 - Run the project with `main`
+## Usage 
+- The files in the current version of the project have a single dependency in `main.cpp`
+- If you want to utilize the code for your own project, compile the other `.cpp` modules and follow the implementation in `main.cpp`
+- I got too lazy to fix the dependency issue
