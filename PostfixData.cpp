@@ -9,6 +9,7 @@ class PostfixData {
     private:
         queue<Data> data;
 
+        //Helper function that assigns precedence to the operators
         int getPrecedence(string sign) 
         {
             if (sign == "!")
@@ -31,6 +32,7 @@ class PostfixData {
             return -1;
         }
 
+        //Long ahh function that does the individual operations for 2 operators
         Data operate(int A, int B, string C) 
         {
             Data output;
@@ -80,6 +82,7 @@ class PostfixData {
             return output;
         }
 
+        // Helper function for integer exponential function
         int power(int A, int B) 
         {
             int num = 1;
@@ -91,16 +94,25 @@ class PostfixData {
         }
     
     public:
+        //Constructor
         PostfixData(queue<Data> infix) 
         {
-            convertInfix(infix);
+            setData(infix);
         }
 
+        //Getter
         queue<Data> getData() 
         {
             return this->data;
         }
 
+        //Setter
+        void setData(queue<Data> infix) 
+        {
+            convertInfix(infix);
+        }
+
+        //Converts infix to postfix
         void convertInfix(queue<Data> infix) 
         {
             stack<Data> stck;
@@ -126,11 +138,14 @@ class PostfixData {
                 //If close parenthesis, empty the stack to result
                 else if (current.getOperator() == ")")
                 {
+                    //Keep popping stack until it is empty or ( is reached
                     while (!stck.empty() && stck.top().getOperator() != "(")
                     {
                         data.push(stck.top());
                         stck.pop();
                     }
+
+                    //Remove the extra (
                     if (!stck.empty())
                         stck.pop();
                 }
@@ -176,6 +191,7 @@ class PostfixData {
             }
         }
 
+        //Evaluates postfix expression and returns the result
         Data evaluate() {
             stack<Data> stck;
             int postFixLength = int(data.size());
@@ -203,11 +219,13 @@ class PostfixData {
 
                 else // other operands
                 {
+                    //pop A pop B
                     Data A = stck.top();
                     stck.pop();
                     Data B = stck.top();
                     stck.pop();
 
+                    //Check for division by 0 errors
                     if ((current.getOperator() == "/" || current.getOperator() == "%") && A.getOperand() == 0) 
                     {
                         Data result;
@@ -215,10 +233,12 @@ class PostfixData {
                         return result;
                     }
 
+                    //Push to stack the result
                     stck.push(operate(B.getOperand(), A.getOperand(), current.getOperator()));
                 }
             }
 
+            //Return the evaluation result
             return stck.top();
         }
 
